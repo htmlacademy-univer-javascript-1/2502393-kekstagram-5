@@ -2,7 +2,7 @@ function checkTheString (string, lenght){
   return string.length <= lenght;
 }
 
-checkTheString('Сегоднятепло', 10);
+checkTheString('сегоднятепло', 10);
 // console.log(checkTheString('проверяемая строка', 20));
 // console.log(checkTheString('проверяемая строка', 18));
 // console.log(checkTheString('проверяемая строка', 10));
