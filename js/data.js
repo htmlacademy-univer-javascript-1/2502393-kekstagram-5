@@ -1,6 +1,6 @@
 // Модуль с основной функцией generatePhotos, которая генерирует фотографии.
 
-import {getRandomInt} from './util'; // Понадобится вспомогательная функция getRandomInt.
+import { getRandomInt } from './util.js'; // Понадобится вспомогательная функция getRandomInt.
 
 const PHOTO_COUNT = 25;
 const MIN_LIKES = 15;
@@ -53,4 +53,4 @@ function generatePhotos() {
   return photos;
 }
 
-generatePhotos();
+export {generatePhotos};
