@@ -27,7 +27,9 @@ function getThumbnail ({url, description, likes, comments}) {
 
 function renderingThumbnails (pictures) {
   if (!Array.isArray(pictures)) {
-    console.error ("Invalid input: 'pictures' must be an array.");
+
+    // eslint-disable-next-line no-console
+    console.log ('Invalid input: \'pictures\' must be an array.');
     return;
   }
   const fragment = document.createDocumentFragment();
