@@ -81,8 +81,7 @@ const showBigPicture = (data) => {
   commentsLoader.addEventListener('click', onCommentsLoaderClick);
 
   renderPictureDetails(data);
-  comments = data.comments;
-  renderComments(comments);
+  renderComments(data.comments);
 };
 
 cancelButtonElement.addEventListener('click', onCancelButtonClick);
