@@ -23,6 +23,7 @@ const createComment = ({ avatar, message, name }) => {
 };
 
 const renderComments = () => {
+  commentListElement.innerHTML = '';
   currentComments += COMMENTS_STEP;
   if (currentComments >= comments.length) {
     commentsLoader.classList.add('hidden');
@@ -36,10 +37,7 @@ const renderComments = () => {
     const comment = createComment(comments[i]);
     fragment.append(comment);
   }
-
-  commentListElement.replaceChildren();
   commentListElement.append(fragment);
-  commentCountElement.innerHTML = '';
 };
 
 const onCommentsLoaderClick = () => {
