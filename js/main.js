@@ -1,6 +1,3 @@
-import {generatePhotos} from './data.js';
-generatePhotos();
-// console.log(generatePhotos());
-
-import {renderingThumbnails} from './rendering.js';
-renderingThumbnails();
+import { generatePhotos } from './data.js';
+import { showGallery } from './gallery.js';
+showGallery(generatePhotos());
