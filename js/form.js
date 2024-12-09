@@ -1,4 +1,6 @@
 import { isEscapeKey } from './util.js';
+import { scaleReset } from './scale.js';
+import { sliderOperation, removeSlider, removeEffects } from './filter.js';
 
 const MAX_HASHTAGS_COUNT = 5;
 const VALID_HASHTAGS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -27,11 +29,15 @@ const openForm = () => {
   uploadOverlay.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
+  sliderOperation();
 };
 
 const hideForm = () => {
   uploadForm.reset();
   pristine.reset();
+  scaleReset();
+  removeEffects();
+  removeSlider();
   uploadOverlay.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
