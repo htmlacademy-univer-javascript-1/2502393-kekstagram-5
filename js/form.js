@@ -2,6 +2,7 @@ import { isEscapeKey } from './util.js';
 import { scaleReset } from './scale.js';
 import { sliderOperation, removeSlider, removeEffects } from './filter.js';
 
+
 const MAX_HASHTAGS_COUNT = 5;
 const VALID_HASHTAGS = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_COMMENT_LENGTH = 140;
@@ -13,11 +14,14 @@ const errorMessages = {
   COMMENT_MAXLENGTH_ERROR: `Длина комментария не больше ${MAX_COMMENT_LENGTH} символов`
 };
 
+
 const bodyElement = document.querySelector('body');
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
 const uploadHashtag = uploadForm.querySelector('.text__hashtags');
 const uploadComment = uploadForm.querySelector('.text__description');
+
+const uploadSubmitButton = uploadForm.querySelector('.img-upload__submit');
 
 
 const pristine = new Pristine(uploadForm, {
@@ -104,3 +108,23 @@ pristine.addValidator(
 uploadForm.querySelector('.img-upload__input').addEventListener('change', handleInputChange);
 uploadForm.querySelector('.img-upload__cancel').addEventListener('click', handleCancelClick);
 
+sliderOperation();
+
+const handleFormSubmission = (callback) => {
+  uploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault(); // предотвращение стандартной отправки формы
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      uploadSubmitButton.disabled = true; // блокировка кнопки отправки
+
+      // Обработка формы с колбэком
+      callback(new FormData(uploadForm))
+        .then(() => {
+          uploadSubmitButton.disabled = false;
+        });
+    }
+  });
+};
+
+export { hideForm, handleFormSubmission };
