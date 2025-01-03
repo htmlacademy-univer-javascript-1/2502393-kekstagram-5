@@ -14,7 +14,7 @@
 const thumbnailTemplate = document
   .querySelector('#picture')
   .content.querySelector('.picture');
-const container = document.querySelector('.pictures');
+
 
 function getThumbnail ({url, description, likes, comments, id}) {
   const thumbnail = thumbnailTemplate.cloneNode(true);
@@ -29,15 +29,13 @@ function getThumbnail ({url, description, likes, comments, id}) {
 }
 
 
-function renderingThumbnails (pictures) {
-
+function renderingThumbnails (pictures, container) {
+  container.querySelectorAll('.picture').forEach((element) => element.remove());
   const fragment = document.createDocumentFragment();
-
-  for (let i = 0; i < pictures.length; i++) {
-    const picture = pictures[i];
+  pictures.forEach((picture) => {
     const thumbnail = getThumbnail(picture);
     fragment.appendChild(thumbnail);
-  }
+  });
 
   container.appendChild(fragment);
 }
