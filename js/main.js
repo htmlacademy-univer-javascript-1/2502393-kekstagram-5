@@ -6,6 +6,8 @@ import { showAlert, debounce } from './util.js';
 import './form.js';
 import { init, getFilterPictures } from './order.js';
 
+import './photo.js';
+
 try {
   init(await fetchData(), debounce(showGallery));
   showGallery(getFilterPictures());
