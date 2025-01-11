@@ -61,7 +61,7 @@ const validateUniqueHashtags = (hashtag) => {
 };
 
 function onDocumentKeydown(evt) {
-  if (isEscapeKey && !isInputOnFocused()) {
+  if (isEscapeKey(evt) && !isInputOnFocused()) {
     evt.preventDefault();
     hideForm();
   }

@@ -8,14 +8,6 @@ import { init, getFilterPictures } from './order.js';
 
 import './photo.js';
 
-try {
-  init(await fetchData(), debounce(showGallery));
-  showGallery(getFilterPictures());
-} catch (err) {
-  showAlert(err.message);
-}
-
-
 handleFormSubmission(async (data) => {
   try {
     await submitData(data);
@@ -25,3 +17,10 @@ handleFormSubmission(async (data) => {
     showErrorMessage();
   }
 });
+
+try {
+  init(await fetchData(), debounce(showGallery));
+  showGallery(getFilterPictures());
+} catch (err) {
+  showAlert(err.message);
+}
