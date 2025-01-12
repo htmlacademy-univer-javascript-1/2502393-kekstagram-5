@@ -7,6 +7,7 @@ function getRandomInt (min, max) {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
+const ALERT_TIME = 5000;
 const showAlert = (message) => {
   const alert = document.createElement('div');
   alert.style.zIndex = '100';
@@ -29,6 +30,10 @@ const showAlert = (message) => {
 
   alert.textContent = message;
   document.body.append(alert);
+
+  setTimeout(() => {
+    alert.remove();
+  }, ALERT_TIME);
 };
 
 function debounce (callback, timeoutDelay = 500) {
@@ -48,6 +53,7 @@ function debounce (callback, timeoutDelay = 500) {
     // пока действие совершается чаще, чем переданная задержка timeoutDelay
   };
 }
+
 
 export { getRandomInt, isEscapeKey, showAlert, debounce };
 

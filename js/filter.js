@@ -63,18 +63,25 @@ const effectsLevelSlider = document.querySelector('.effect-level__slider');
 const effectsLevelValue = document.querySelector('.effect-level__value');
 const effectsContainer = document.querySelector('.effects');
 let currentEffect = DEFAULT_EFFECT;
+let sliderInstance = null; // Добавляем переменную для хранения экземпляра слайдера
 
 const isDefault = () => currentEffect.filter === DEFAULT_EFFECT.filter;
 
-const getSlider = () => noUiSlider.create(effectsLevelSlider, {
-  range: {
-    min: DEFAULT_EFFECT.min,
-    max: DEFAULT_EFFECT.max,
-  },
-  start: DEFAULT_EFFECT.max,
-  step: DEFAULT_EFFECT.step,
-  connect: 'lower',
-});
+const getSlider = () => {
+  if (!sliderInstance) {
+    sliderInstance = noUiSlider.create(effectsLevelSlider, {
+      range: {
+        min: DEFAULT_EFFECT.min,
+        max: DEFAULT_EFFECT.max,
+      },
+      start: DEFAULT_EFFECT.max,
+      step: DEFAULT_EFFECT.step,
+      connect: 'lower',
+    });
+  }
+  return sliderInstance;
+};
+
 effectsLevel.classList.add('hidden');
 
 const showSlider = () => {
@@ -86,16 +93,17 @@ const showSlider = () => {
 };
 
 const changeSlider = () => {
-  effectsLevelSlider.noUiSlider.updateOptions({
-    range: {
-      min: currentEffect.min,
-      max: currentEffect.max,
-    },
-    step: currentEffect.step,
-    start: currentEffect.max,
-    connect: 'lower',
-  });
-
+  if (sliderInstance) { // Проверяем, существует ли слайдер
+    sliderInstance.updateOptions({
+      range: {
+        min: currentEffect.min,
+        max: currentEffect.max,
+      },
+      step: currentEffect.step,
+      start: currentEffect.max,
+      connect: 'lower',
+    });
+  }
   showSlider();
 };
 
@@ -113,7 +121,10 @@ function changeEffect(effect) {
 }
 
 const usingSlider = () => {
-  const currentValueEffect = effectsLevelSlider.noUiSlider.get();
+  if (!sliderInstance) {
+    return; // Если слайдер не создан, не продолжаем
+  }
+  const currentValueEffect = sliderInstance.get();
   if (isDefault()) {
     uploadPreview.style.filter = 'none';
     scaleReset();
@@ -124,19 +135,27 @@ const usingSlider = () => {
 };
 
 const sliderOperation = () => {
-  getSlider();
+  getSlider(); // Создаем слайдер только один раз
   usingSlider();
   effectsContainer.addEventListener('change', changeEffectContainer);
-  effectsLevelSlider.noUiSlider.on('update', usingSlider);
+  if (sliderInstance) {
+    sliderInstance.on('update', usingSlider);
+  }
+
 };
 
 const removeSlider = () => {
   effectsContainer.removeEventListener('change', changeEffectContainer);
-  effectsLevelSlider.noUiSlider.destroy();
+  if (sliderInstance) {
+    sliderInstance.destroy();
+  }
+
+  sliderInstance = null;
 };
 
 const removeEffects = () => {
   currentEffect = DEFAULT_EFFECT;
   changeSlider();
 };
+
 export { sliderOperation, removeSlider, removeEffects };
